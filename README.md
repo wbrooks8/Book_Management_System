@@ -17,6 +17,18 @@ A small REST API for managing books, built with Go, Gin, GORM, and MySQL. The pr
 - Docker Engine with Docker Compose, if using the containerized setup
 - MySQL 8 or newer, if running the Go process directly
 
+When using Docker Compose, both the Docker CLI and the Docker daemon must be installed and running. On Linux, start the daemon with:
+
+```bash
+sudo systemctl enable --now docker
+```
+
+Verify that Docker is available before starting the application:
+
+```bash
+docker info
+```
+
 ## Run With Docker Compose
 
 This is the easiest way to run the complete application. From the project directory:
@@ -131,6 +143,14 @@ go vet ./...
 The controller tests use SQLite in memory, so they do not need a running MySQL server.
 
 ## Troubleshooting
+
+### `Cannot connect to the Docker daemon`
+
+The Docker CLI is installed, but the Docker daemon is not running or your user cannot access its socket. On Linux, start it with `sudo systemctl enable --now docker`, then retry `docker info`. If Docker reports a permissions error, add your user to the `docker` group and start a new login session:
+
+```bash
+sudo usermod -aG docker "$USER"
+```
 
 ### `connect: connection refused`
 
